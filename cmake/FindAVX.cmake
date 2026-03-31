@@ -1,0 +1,23 @@
+include(CheckCXXCompilerFlag)
+
+set(AVX2_FOUND FALSE)
+
+if(MSVC)
+    check_cxx_compiler_flag("/arch:AVX2" COMPILER_SUPPORTS_AVX2)
+    if(COMPILER_SUPPORTS_AVX2)
+        set(AVX2_FOUND TRUE)
+        set(AVX2_FLAGS "/arch:AVX2")
+    endif()
+else()
+    check_cxx_compiler_flag("-mavx2 -mfma" COMPILER_SUPPORTS_AVX2)
+    if(COMPILER_SUPPORTS_AVX2)
+        set(AVX2_FOUND TRUE)
+        set(AVX2_FLAGS "-mavx2 -mfma")
+    endif()
+endif()
+
+if(AVX2_FOUND)
+    message(STATUS "AVX2 supported: using ${AVX2_FLAGS}")
+else()
+    message(WARNING "AVX2 not supported by compiler. SIMD kernels will use scalar fallbacks.")
+endif()
