@@ -217,7 +217,7 @@ prof.print_summary();
 
 ## License
 
-[Add your license here]
+N/A
 
 ## Contributing
 
