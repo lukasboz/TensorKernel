@@ -48,8 +48,8 @@ PYBIND11_MODULE(tensorkernel, m) {
         // NumPy interop: zero-copy view into tensor memory
         .def("numpy", [](tk::Tensor& t) {
             auto shape = t.shape();
-            std::vector<ssize_t> np_shape(shape.begin(), shape.end());
-            std::vector<ssize_t> np_strides;
+            std::vector<py::ssize_t> np_shape(shape.begin(), shape.end());
+            std::vector<py::ssize_t> np_strides;
             for (auto s : t.strides())
                 np_strides.push_back(s * sizeof(float));
             return py::array_t<float>(
